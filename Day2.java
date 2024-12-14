@@ -48,7 +48,47 @@ Object part1() {
 }
 
 Object part2() {
-    return null;
+    int count = reports.size();
+    int test = 0;
+    for (ArrayList<Integer> level: reports) {
+        test++;
+        boolean skippedOnce = false;
+
+        // Remove report if more than one redundant levels
+        if (new HashSet<>(level).size() + 1 < level.size()) {
+            count--;
+            println(test);
+            continue;
+        }
+
+        for (int i = 0; i < level.size() - 1; i++) {
+
+            // if (i == level.size() - 2) { continue; }
+
+            // if (!skippedOnce && i == 0) { continue; }
+
+            if (validDiff(i, i + 1, level)) {
+                continue;
+            }
+
+            // Remove indices at invalid difference
+            if (!skippedOnce && (i == level.size() - 2 || (validDiff(i, i + 2, level)))) {
+                i++;
+                skippedOnce = true;
+                continue;
+            }
+
+            if (!skippedOnce && (i == 0 || validDiff(i - 1, i + 1, level))) {
+                skippedOnce = true;
+                continue;
+            }
+
+            println(test);
+            count--;
+            break;
+        }
+    }
+    return count;
 }
 
 boolean validDiff(int left, int right, ArrayList<Integer> list) {
@@ -62,11 +102,9 @@ Path path(String suffix) {
 
 void main() throws IOException {
     long start = System.nanoTime();
-    parse(path("a"));
-    System.out.println(part1());
-    System.out.println(part2());
+/*    parse(path("a"));
+    System.out.println(part2());*/
     parse(path("z"));
-    System.out.println(part1());
     System.out.println(part2());
     System.out.println("%.3f sec".formatted((System.nanoTime() - start) / 1E9));
 }
