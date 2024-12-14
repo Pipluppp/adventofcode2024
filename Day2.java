@@ -57,16 +57,10 @@ Object part2() {
         // Remove report if more than one redundant levels
         if (new HashSet<>(level).size() + 1 < level.size()) {
             count--;
-            println(test);
             continue;
         }
 
         for (int i = 0; i < level.size() - 1; i++) {
-
-            // if (i == level.size() - 2) { continue; }
-
-            // if (!skippedOnce && i == 0) { continue; }
-
             if (validDiff(i, i + 1, level)) {
                 continue;
             }
@@ -83,7 +77,6 @@ Object part2() {
                 continue;
             }
 
-            println(test);
             count--;
             break;
         }
@@ -102,9 +95,11 @@ Path path(String suffix) {
 
 void main() throws IOException {
     long start = System.nanoTime();
-/*    parse(path("a"));
-    System.out.println(part2());*/
+    parse(path("a"));
+    System.out.println(part2());
+    System.out.println(part1());
     parse(path("z"));
+    System.out.println(part1());
     System.out.println(part2());
     System.out.println("%.3f sec".formatted((System.nanoTime() - start) / 1E9));
 }
